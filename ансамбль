@@ -1,0 +1,19 @@
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import VotingClassifier
+from sklearn.neighbors import KNeighborsClassifier
+
+# Загрузите ваши данные и разделите их на обучающий и тестовый наборы
+
+# Создайте базовые модели
+knn_model = KNeighborsClassifier(n_neighbors=3)
+rf_model = RandomForestClassifier(n_estimators=100)
+
+# Создайте ансамбль методом голосования
+ensemble = VotingClassifier(estimators=[('knn', knn_model), ('rf', rf_model)], voting='hard')
+
+# Обучите ансамбль на обучающих данных
+ensemble.fit(X_train, y_train)
+
+# Оцените производительность ансамбля на тестовых данных
+accuracy = ensemble.score(X_test, y_test)
+print("Accuracy of the ensemble:", accuracy)
